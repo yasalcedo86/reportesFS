@@ -1,0 +1,188 @@
+#fondoNegro {
+	position: absolute;
+	top: 0px;
+}
+
+#blackground {
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.6);
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+
+#wrapper-info {
+	width: 100%;
+	max-width: 650px;
+	margin: 0px auto;
+	background-color: white;
+	box-shadow: 0px 5px 20px 10px rgba(0, 0, 0, 0.3);
+}
+
+#wrapper-info i {
+	cursor: unset !important;
+	padding-right: 3px;
+	color: var(--gris3);
+}
+
+#wrapper-info i:last-child {
+	cursor: pointer !important;
+	color: rgb(218, 0, 0);
+}
+
+#wrapper-info i:last-child:hover {
+	cursor: pointer !important;
+	color: rgb(153, 0, 0);
+}
+
+#wrapper-info table {
+	width: 100%;
+	max-width: 650px;
+	margin: 0px auto;
+	background-color: #F1F1F1;
+}
+
+#wrapper-info table, #wrapper-info td, #wrapper-info tr {
+	border-collapse: collapse;
+	height: 40px;
+}
+
+#wrapper-info td:nth-child(1) p {
+	position: relative;
+	top: -4px;
+	display: inline;
+}
+
+#wrapper-info td:nth-child(1) {
+	padding-left: 30px;
+}
+
+#wrapper-info td:nth-child(2) {
+	padding-right: 30px;
+	text-align: right;
+	position: relative;
+}
+
+#wrapper-info td:nth-child(2) p:nth-child(2) {
+	font-size: .8em;
+	display: block;
+	color: var(--gris1);
+}
+
+/*Tabla div 1*/
+
+#wrapper-info > div:nth-child(1) {
+	padding: 15px 0px;
+	background-color: #F1F1F1;
+	border-bottom: 2px solid var(--gris1);
+	margin-bottom: 10px;
+
+}
+
+/*Tabla div 2*/
+
+#wrapper-info div:nth-child(2) {
+	margin: 0px auto;
+	width: 100%;
+	max-width: 650px;
+	max-height: 200px;
+	overflow-y: scroll;
+	padding: 0px 20px;
+	box-sizing: border-box;
+}
+
+#wrapper-info div:nth-child(2) > table {
+	background-color: white;
+	border: 0px;
+	margin: 0px;
+}
+
+#wrapper-info div:nth-child(2) > table td, div > th, div > tr {
+	padding: 12px;
+	border-bottom: solid 1px var(--gris1);
+	border-top: 0px;
+	border-left: 0px;
+	border-right: 0px;
+}
+
+#wrapper-info div:nth-child(2) > table td:nth-child(2) {
+	width: 200px;
+	vertical-align: bottom;
+}
+
+#wrapper-info div:nth-child(2) > table td:nth-child(2) p:empty::before {
+	content: "000.000";
+}
+
+/*Footer*/
+
+#wrapper-info #final {
+	background-color: #323232;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#wrapper-info #final p {
+	color: white;
+}
+
+#wrapper-info #abono {
+	font-size: 14px;
+	color: red;
+}
+
+#wrapper-info #abono::before {
+	font-size: 14px;
+	content: '-';
+	text-align: left;
+	color: red;
+}
+
+#wrapper-info #abono::after {
+	font-size: 14px;
+	content: ' de abono';
+	text-align: left;
+	color: red;
+}
+
+#wrapper-info #final #descuento {
+	content: "-";
+	color: red;
+}
+
+#wrapper-info #final #descuento::before {
+	content: "-";
+}
+
+#wrapper-info #final #descuento::after {
+	content: "% de descuento";
+}
+
+#wrapper-info #cuenta-final {
+	font-size: 30px;
+}
+
+#wrapper-info #cuenta-final:empty::before {
+	content: "$ 000.000";
+	text-align: right;
+	float: right;
+	font-size: 30px;
+}
+
+#wrapper-info #final #sub::before {
+	content: '$ '
+}
+
+#wrapper-info #final #sub {
+	font-size: 24px;
+}
+
+/* Vaya embolate esto */
+
+.table-container {
+	max-height: calc(100vh - 100px);
+	overflow-y: scroll;
+}

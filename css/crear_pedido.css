@@ -1,0 +1,156 @@
+/*Wrapper General*/
+
+#wrapper-pedidos {
+	box-sizing: border-box;
+	width: 100vw;
+	padding-top: 85px;
+	padding-left: 25px;
+	padding-right: 25px;
+	display: grid;
+	grid-template-rows: 70px auto 60px;
+	grid-row-gap: 20px;
+	height: calc(100vh - 65px);
+}
+
+#uno div:nth-child(1){
+	float: left;
+}
+
+#uno div:nth-child(2){
+	float: right;
+}
+
+#uno p {
+	margin-bottom: 10px;
+}
+
+#uno input {
+	width: 200px;
+}
+
+/*Tabla*/
+
+#dos {
+	overflow-y: scroll;
+}
+
+#dos table {
+	width: 100%;
+	max-height: 260px;
+	overflow: scroll;
+}
+
+#dos table th {
+	position: sticky;
+	top: -1px;
+}
+
+#dos input {
+	border: none;
+	font-size: 16px;
+	width: inherit;
+}
+
+#dos table, #dos tr, #dos th, #dos td {
+	border: 1px solid var(--gris1);
+	border-collapse: collapse;
+	padding: 10px;
+}
+
+#dos td:nth-child(1), #dos td:nth-child(1) input {
+	width: 30px;
+	text-align: center;
+}
+
+#dos td:nth-child(2), #dos td:nth-child(2) input {
+	width: 100%;
+}
+
+#dos td:nth-child(3), #dos td:nth-child(3) input {
+	width: 75px;
+	text-align: left;
+}
+
+#dos td:nth-child(4), #dos td:nth-child(4) input {
+	width: 65px;
+	text-align: center;
+	border: 0px;
+}
+
+#dos table th {
+	background-color: var(--gris0);
+	height: 25px;
+	z-index: 99;
+}
+
+#dos table td:nth-child(4) {
+	display: flex;
+}
+
+/*Tres*/
+
+#tres > #operaciones > .boton-azul {
+	width: 140px;
+	height: 40px;
+}
+#tres input {
+	height: 40px;
+	width: 120px;
+	box-sizing: border-box;
+}
+
+#tres #operaciones {
+	float: left;
+}
+
+#tres #sub {
+	float: right;
+	display: flex;
+}
+
+#tres #sub p {
+	font-size: 24px;
+	padding: 10px;
+}
+
+#tres #sub #subtotal {
+	float: right;
+}
+
+#tres #sub #subtotal:empty::after {
+	content: '$ 000.000';
+}
+
+/*Cuatro*/
+
+#cuatro {
+	background-color: var(--gris0);
+	padding: 10px 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+#cuatro footer {
+	background-color: blue;
+	display: flex;
+	align-items: center;
+}
+
+#cuatro button {
+	width: 200px;
+}
+
+#cuatro p {
+	margin-left: 20px;
+	position: relative;
+	top: 5px;
+	font-size: 30px;
+}
+
+#cuatro div:nth-child(1) {
+	display: flex;
+}
+
+#cuatro #total:empty::after {
+	content: '$ 000.000'
+}

@@ -1,0 +1,37 @@
+form {
+	padding: 50px;
+	background-color: white;
+}
+
+.inputs {
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5px;
+	
+}
+
+.form {
+	border: solid 1px var(--gris2);
+	border-radius: 2px !important;
+}
+
+h4 {
+	text-align: left;
+	color: #777777;
+	font-weight: medium;
+}
+
+table {
+	margin: 0 auto;
+	position: relative;
+	top: -5px;
+}
+
+header {
+	height: 60px !important;
+}
+
+header h1 {
+	line-height: 60px !important;
+}

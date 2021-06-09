@@ -1,0 +1,60 @@
+#noScroll {
+	height: calc(100vh - 160px);
+}
+
+#elegir-fecha {
+	width: 600px;
+	margin: 0 auto;
+	display: flex;
+}
+
+#elegir-fecha input {
+	margin: 25px 5px;
+}
+
+#elegir-fecha input:nth-child(3) {
+	width: 150px;
+	height: 42px;
+	background-color: var(--gris1);
+}
+
+#elegir-fecha input:nth-child(3):hover {
+	background-color: #4D79F0;
+}
+
+#reportes-footer {
+	background-color: var(--gris3);
+	padding: 10px 20px 15px 20px;
+	display: flex;
+	justify-content: space-between;
+	bottom: 0px;
+	position: fixed;
+	box-sizing: border-box;
+	width: 100%;
+	box-shadow: 0px -5px 5px rgba(121, 121, 121, 0.25);
+}
+
+#reportes-footer footer {
+	background-color: blue;
+	display: flex;
+	align-items: center;
+}
+
+#reportes-footer button {
+	width: 200px;
+}
+
+#reportes-footer p {
+	position: relative;
+	top: 5px;
+	font-size: 30px;
+	color: white;
+}
+
+#reportes-footer div:nth-child(1) {
+	display: flex;
+}
+
+#reportes-footer #total:empty::after {
+	content: '$ 000.000'
+}

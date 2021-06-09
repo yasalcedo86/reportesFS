@@ -1,0 +1,27 @@
+/*Botones*/
+
+.boton-lateral-rojo i {
+	color: var(--rojo);
+}
+
+.boton-lateral-verde i {
+	color: var(--verde);
+}
+
+.boton-lateral-negro i {
+	color: var(--gris2);
+}
+
+.boton-lateral-rojo i:hover {
+	color: #86353F;
+}
+
+.boton-lateral-verde i:hover {
+	color: #498A68;
+}
+
+.boton-lateral-negro i:hover {
+	color: var(--gris3);
+}
+
+/*#4D79F0*/

@@ -1,0 +1,103 @@
+.table-container table {
+	margin: 0 auto;
+}
+
+.table-container {
+	position: relative;
+	top: 70px;
+	width: 98%;
+	margin: 0 auto;
+}
+
+.table-container tr th {
+	padding: 2px!important;
+}
+
+.table-container td, .table-container tr {
+	border: solid 1px var(--gris0) !important;
+}
+
+table.dataTable thead .sorting {
+	padding: 15px!important;
+	border-collapse: collapse;
+}
+
+.table-container th input {
+	width: 100%;
+	height: 35px;
+	padding: 10px;
+	border: solid 1px var(--gris0)!important;
+	border-radius: 0px!important;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+.table-container th input:focus {
+	outline: none!important;
+}
+
+.table-container th input::placeholder {
+	color: var(--gris1)!important;
+    font-size: 12px!important;
+}
+
+/*La alineacion de la barra de paginado*/
+
+.dataTables_wrapper .dataTables_paginate {
+	float: initial!important;
+    text-align: center!important;
+    padding-top: 30px!important;
+}
+
+/*Color Rayas raras esas que dividen la tabla. 
+Yo lo puse clarito para que no contraste un monton*/
+
+table.dataTable thead th, table.dataTable thead td {
+	padding: 10px 18px;
+    border-bottom: 1px solid var(--gris1) !important;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid var(--gris1) !important;
+}
+
+/*Quitar la imagensita esa cuando cliqueas en el THEAD*/
+
+table.dataTable thead .sorting, 
+table.dataTable thead .sorting_desc, 
+table.dataTable thead .sorting_asc {
+	filter: grayscale(1);
+}
+
+/*Color de la tipografia base en el paginado*/
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+	color: var(--gris3)!important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: var(--gris3) !important;
+    border: 1px solid var(--gris0)!important;
+    background: var(--gris0)!important;
+}
+
+/*Boton desabilitado*/
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+	color: var(--gris1)!important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+	background-color: white!important;
+	color: var(--gris1)!important;
+	border: 1px solid white !important;
+}
+
+/*Pagina seleccionada (osea, el boton de la pagina activa)*/
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, 
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+	background-color: var(--gris2)!important;
+	color: white!important;
+	border: 1px solid var(--gris2)!important;
+}

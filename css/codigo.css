@@ -1,0 +1,58 @@
+.codigo {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.codigo .span {
+  width: 500px;
+  background-color: white;
+  position: relative;
+  margin: 0 auto;
+}
+.codigo header {
+  height: 50px;
+  position: static;
+  width: 500px;
+  background-color: var(--gris0);
+  box-shadow: 0px 5px 5px rgba(121, 121, 121, 0.25);
+}
+.codigo h1 {
+  text-align: center;
+  color: var(--gris3);
+  font-size: 20px;
+  position: static;
+  line-height: 50px;
+}
+.codigo textarea {
+  width: 100%;
+  height: 200px;
+  font-size: 1em;
+  padding: 10px;
+}
+
+.codigo div:nth-child(2) {
+  padding: 30px 50px;
+}
+
+.codigo div:nth-child(2) p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.codigo .options {
+  display: flex;
+  justify-content: center;
+}
+
+.codigo #ingcodigo {
+  width: 200px;
+  height: 20px;
+  padding: 10px;
+  text-align: center;
+  line-height: 4px;
+  font-size: 1em;
+}
