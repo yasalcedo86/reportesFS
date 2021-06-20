@@ -17,15 +17,23 @@ class Reportes extends Crud
 	{
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
-		$sql = ("SELECT clientes.nombre, 
-		razonsocial, 
-		agentes.codagente AS codigo_agente, 
-		agentes.nombre AS agente, 
-		clientes.telefono1 AS telefono_cliente, 
-		clientes.telefono2 AS telefono_cliente_secundario, 
-		dirclientes.direccion, 
+		$sql = ("SELECT 
+		clientes.nombre,
+		razonsocial,
+		agentes.codagente AS codigo_agente,
+		agentes.nombre AS agente,
+		clientes.telefono1 AS telefono_cliente,
+		clientes.telefono2 AS telefono_cliente_secundario,
+		dirclientes.direccion,
 		dirclientes.provincia,
-		 dirclientes.ciudad FROM `clientes` LEFT JOIN agentes ON agentes.codagente = clientes.codagente INNER JOIN dirclientes ON dirclientes.codcliente = clientes.codcliente");
+		dirclientes.ciudad
+	FROM
+		`clientes`
+			LEFT JOIN
+		agentes ON agentes.codagente = clientes.codagente
+			INNER JOIN
+		dirclientes ON dirclientes.codcliente = clientes.codcliente
+		where clientes.debaja = 0;");
 		$this->consulta('SET NAMES utf8');
 		# Escribir encabezado de los productos
 		$encabezado = ["nombre","razonsocial","codigo_agente","agente","telefono_cliente","telefono_cliente_secundario","direccion","provincia","ciudad"];
@@ -173,6 +181,68 @@ class Reportes extends Crud
 			$sheet->setCellValueByColumnAndRow(9, $numeroDeFila, $observaciones);
 			$sheet->setCellValueByColumnAndRow(10, $numeroDeFila, $total);
 			$sheet->setCellValueByColumnAndRow(11, $numeroDeFila, $fecha_pago);
+			$numeroDeFila++;
+		}
+		$writer = new Xlsx($spreadsheet);
+		$writer->save('../../reporte/reporte.xlsx');
+		echo "true";
+	}
+
+	public function FunctionName()
+	{
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sql = "SELECT
+					ag.nombre,
+					cli.nombrecliente,
+					clientes.razonsocial,
+					cli.codigo,
+					cli.codpago,
+					cli.fecha,
+					cli.vencimiento,
+					TIMESTAMPDIFF(DAY, CURRENT_DATE(), cli.vencimiento) AS dias_vencidos,
+					IF(Date(cli.vencimiento) < current_date(), 'Vencido', dayname(cli.vencimiento)) as dias,
+					cli.observaciones,
+					cli.total
+				FROM
+					facturascli cli
+					inner join clientes on clientes.codcliente = cli.codcliente
+					inner join agentes ag on ag.codagente = clientes.codagente 
+				WHERE YEAR(vencimiento) >= '2020' and cli.pagada = 0;";
+				
+		$this->consulta('SET NAMES utf8');
+		# Escribir encabezado de los productos
+		$encabezado = ["nombre","nombrecliente","razonsocial","codigo","codpago","fecha","vencimiento","dias_vencidos","dias","observaciones","total"];
+		# El último argumento es por defecto A1 pero lo pongo para que se explique mejor
+		$sheet->fromArray($encabezado, null, 'A1');
+		$resultado = $this->consulta($sql);
+		$res = $resultado->fetchAll(PDO::FETCH_ASSOC);
+		$numeroDeFila = 2;
+		foreach ($res as $data ) {
+			# Obtener los datos de la base de datos
+			$nombre = $data['nombre'];
+			$nombrecliente = $data['nombrecliente'];
+			$razonsocial = $data['razonsocial'];
+			$codigo = $data['codigo'];
+			$codpago = $data['codpago'];
+			$fecha = $data['fecha'];
+			$vencimiento = $data['vencimiento'];
+			$dias_vencidos = $data['dias_vencidos'];
+			$dias = $data['dias'];
+			$observaciones = $data['observaciones'];
+			$total = $data['total'];
+			# Escribirlos en el documento
+			$sheet->setCellValueByColumnAndRow(1, $numeroDeFila, $nombre);
+			$sheet->setCellValueByColumnAndRow(2, $numeroDeFila, $nombrecliente);
+			$sheet->setCellValueByColumnAndRow(3, $numeroDeFila, $razonsocial);
+			$sheet->setCellValueByColumnAndRow(4, $numeroDeFila, $codigo);
+			$sheet->setCellValueByColumnAndRow(5, $numeroDeFila, $codpago);
+			$sheet->setCellValueByColumnAndRow(6, $numeroDeFila, $fecha);
+			$sheet->setCellValueByColumnAndRow(7, $numeroDeFila, $vencimiento);
+			$sheet->setCellValueByColumnAndRow(8, $numeroDeFila, $dias_vencidos);
+			$sheet->setCellValueByColumnAndRow(9, $numeroDeFila, $dias);
+			$sheet->setCellValueByColumnAndRow(10, $numeroDeFila, $observaciones);
+			$sheet->setCellValueByColumnAndRow(11, $numeroDeFila, $total);
 			$numeroDeFila++;
 		}
 		$writer = new Xlsx($spreadsheet);

@@ -60,6 +60,10 @@ if (!isset($_SESSION['user_id'])) {
         <input type="date" id="dateReport3" value="<?php echo date("Y-m-d"); ?>">
         <input type="button" value="generar" id="reporte_3">
       </div>
+      <div class="reportes_div" >
+        falta descripcion: <br>
+        <input type="button" value="generar" id="reporte_4" onclick="getReporte('FunctionName')">
+      </div>
     </div>
   </body>
 </html>

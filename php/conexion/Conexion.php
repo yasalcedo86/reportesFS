@@ -25,7 +25,7 @@ class Conexion
 		
 		$fecha = date("Y-m-d"); //Obtenemos la fecha y hora para identificar el respaldo
 	
-		// Construimos el nombre de archivo SQL Ejemplo: mibase_20170101-081120.sql
+		//cambiar ruta
 		$salida_sql = '"C:\Users\yesid no niichan\Documents\yesid\Backup_'.$fecha.'.sql"'; 
 		
 		//Comando para genera respaldo de MySQL, enviamos las variales de conexion y el destino

@@ -12,6 +12,9 @@ switch ($_POST['action']) {
 	case 'diarioVentas':
 		echo $reportes->getReporteVentasDiario($data);
 		break;
+	case 'FunctionName':
+		echo $reportes->FunctionName();
+		break;
 	case 'backup':
 		$reportes->getBackup();
 		echo "false";
