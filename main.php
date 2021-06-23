@@ -61,8 +61,12 @@ if (!isset($_SESSION['user_id'])) {
         <input type="button" value="generar" id="reporte_3">
       </div>
       <div class="reportes_div" >
-        falta descripcion: <br>
-        <input type="button" value="generar" id="reporte_4" onclick="getReporte('FunctionName')">
+        Reporte quincenal o mensual: <br>
+        <label >Fecha inicial: </label>
+        <input type="date" id="dateinitial4" value="<?php echo date("Y-m-d"); ?>">
+        <label >Fecha final: </label>
+        <input type="date" id="datefinal4" value="<?php echo date("Y-m-d"); ?>">
+        <input type="button" value="generar" id="reporte_4" >
       </div>
     </div>
   </body>
@@ -73,5 +77,12 @@ if (!isset($_SESSION['user_id'])) {
 <script>
   $("#reporte_3").click( function() {
     getReporte('diarioVentas', $("#dateReport3").val());
+  });
+  $("#reporte_4").click( function() {
+    const data = {
+      dateini: $("#dateinitial4").val(),
+      datefin: $("#datefinal4").val()
+    };
+    getReporte('quincenal', data);
   })
 </script>

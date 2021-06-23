@@ -6,14 +6,14 @@ switch ($_POST['action']) {
 	case 'clientes':
 		echo $reportes->getReporteClientes();
 		break;
-	case 'clientesCartera':
-		echo $reportes->getReporteClientesCartera();
-		break;
 	case 'diarioVentas':
 		echo $reportes->getReporteVentasDiario($data);
 		break;
-	case 'FunctionName':
-		echo $reportes->FunctionName();
+	case 'clientesCartera':
+		echo $reportes->getReporteClientesCartera();
+		break;
+	case 'quincenal':
+		echo $reportes->getReporteQuincena($data);
 		break;
 	case 'backup':
 		$reportes->getBackup();

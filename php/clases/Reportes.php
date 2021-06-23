@@ -71,51 +71,6 @@ class Reportes extends Crud
 		echo "true";
 	}
 
-	
-	/**
-	 * Consulta para generar la cartera de clientes que faltan por pagar
-	 */
-	public function getReporteClientesCartera()
-	{
-		$spreadsheet = new Spreadsheet();
-		$sheet = $spreadsheet->getActiveSheet();
-		$sql = ("SELECT clientes.nombre, clientes.razonsocial, clientes.codagente as codigo_vendedor, agentes.nombre as nombre_vendedor, facturascli.fecha as fecha_facturacion, facturascli.vencimiento as fecha_vencimiento, facturascli.codigo, facturascli.observaciones, facturascli.total FROM `facturascli` INNER JOIN clientes ON clientes.codcliente = facturascli.codcliente left join agentes as agentes on agentes.codagente = clientes.codagente WHERE facturascli.pagada = 0 order by clientes.codagente");
-		$this->consulta('SET NAMES utf8');
-		# Escribir encabezado de los productos
-		$encabezado = ["nombre","razonsocial","codigo_vendedor","nombre_vendedor","fecha_facturacion","fecha_vencimiento","codigo","observaciones","total"];
-		# El último argumento es por defecto A1 pero lo pongo para que se explique mejor
-		$sheet->fromArray($encabezado, null, 'A1');
-
-		$resultado = $this->consulta($sql);
-		$res = $resultado->fetchAll(PDO::FETCH_ASSOC);
-		$numeroDeFila = 2;
-		foreach ($res as $data ) {
-			# Obtener los datos de la base de datos
-			$nombre = $data['nombre'];
-			$razonsocial = $data['razonsocial'];
-			$codigo_vendedor = $data['codigo_vendedor'];
-			$nombre_vendedor = $data['nombre_vendedor'];
-			$fecha_facturacion = $data['fecha_facturacion'];
-			$fecha_vencimiento = $data['fecha_vencimiento'];
-			$codigo = $data['codigo'];
-			$observaciones = $data['observaciones'];
-			$total = $data['total'];
-			# Escribirlos en el documento
-			$sheet->setCellValueByColumnAndRow(1, $numeroDeFila, $nombre);
-			$sheet->setCellValueByColumnAndRow(2, $numeroDeFila, $razonsocial);
-			$sheet->setCellValueByColumnAndRow(3, $numeroDeFila, $codigo_vendedor);
-			$sheet->setCellValueByColumnAndRow(4, $numeroDeFila, $nombre_vendedor);
-			$sheet->setCellValueByColumnAndRow(5, $numeroDeFila, $fecha_facturacion);
-			$sheet->setCellValueByColumnAndRow(6, $numeroDeFila, $fecha_vencimiento);
-			$sheet->setCellValueByColumnAndRow(7, $numeroDeFila, $codigo);
-			$sheet->setCellValueByColumnAndRow(8, $numeroDeFila, $observaciones);
-			$sheet->setCellValueByColumnAndRow(9, $numeroDeFila, $total);
-			$numeroDeFila++;
-		}
-		$writer = new Xlsx($spreadsheet);
-		$writer->save('../../reporte/reporte.xlsx');
-		echo "true";
-	}
 
 	/**
 	 * consulta pare reporte de venta diario por vendedor asignado
@@ -134,17 +89,15 @@ class Reportes extends Crud
 					facturascli.vencimiento AS fecha_vencimiento,
 					facturascli.codigo,
 					facturascli.observaciones,
-					facturascli.total,
-					co_asientos.fecha AS fecha_pago
+					facturascli.total
 				FROM
 					`facturascli`
 						INNER JOIN
 					clientes ON clientes.codcliente = facturascli.codcliente
 						LEFT JOIN
 					agentes AS agentes ON agentes.codagente = clientes.codagente
-						INNER JOIN
-					co_asientos ON co_asientos.idasiento = facturascli.idasientop
-				WHERE DATE(facturascli.fecha) = :fecha
+				WHERE
+					DATE(facturascli.fecha) = :fecha
 				ORDER BY clientes.codagente;");
 				
 		$this->consulta('SET NAMES utf8');
@@ -168,7 +121,6 @@ class Reportes extends Crud
 			$codigo = $data['codigo'];
 			$observaciones = $data['observaciones'];
 			$total = $data['total'];
-			$fecha_pago = $data['fecha_pago'];
 			# Escribirlos en el documento
 			$sheet->setCellValueByColumnAndRow(1, $numeroDeFila, $codpago);
 			$sheet->setCellValueByColumnAndRow(2, $numeroDeFila, $nombre);
@@ -180,7 +132,6 @@ class Reportes extends Crud
 			$sheet->setCellValueByColumnAndRow(8, $numeroDeFila, $codigo);
 			$sheet->setCellValueByColumnAndRow(9, $numeroDeFila, $observaciones);
 			$sheet->setCellValueByColumnAndRow(10, $numeroDeFila, $total);
-			$sheet->setCellValueByColumnAndRow(11, $numeroDeFila, $fecha_pago);
 			$numeroDeFila++;
 		}
 		$writer = new Xlsx($spreadsheet);
@@ -188,7 +139,10 @@ class Reportes extends Crud
 		echo "true";
 	}
 
-	public function FunctionName()
+	/**
+	 * Consulta para generar la cartera de clientes que faltan por pagar
+	 */
+	public function getReporteClientesCartera()
 	{
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
@@ -243,6 +197,76 @@ class Reportes extends Crud
 			$sheet->setCellValueByColumnAndRow(9, $numeroDeFila, $dias);
 			$sheet->setCellValueByColumnAndRow(10, $numeroDeFila, $observaciones);
 			$sheet->setCellValueByColumnAndRow(11, $numeroDeFila, $total);
+			$numeroDeFila++;
+		}
+		$writer = new Xlsx($spreadsheet);
+		$writer->save('../../reporte/reporte.xlsx');
+		echo "true";
+	}
+
+	public function getReporteQuincena($data)
+	{
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sql = "SELECT 
+				facturascli.codpago,
+				clientes.nombre,
+				clientes.razonsocial,
+				clientes.codagente AS codigo_vendedor,
+				agentes.nombre AS nombre_vendedor,
+				facturascli.fecha AS fecha_facturacion,
+				facturascli.vencimiento AS fecha_vencimiento,
+				facturascli.codigo,
+				facturascli.observaciones,
+				facturascli.total,
+				co_asientos.fecha AS fecha_pago
+				FROM
+					`facturascli`
+						INNER JOIN
+					clientes ON clientes.codcliente = facturascli.codcliente
+						LEFT JOIN
+					agentes AS agentes ON agentes.codagente = clientes.codagente
+						INNER JOIN
+					co_asientos ON co_asientos.idasiento = facturascli.idasientop
+				WHERE
+					facturascli.pagada = 1
+						AND DATE(facturascli.fecha) >= :fecha1
+						AND DATE(facturascli.fecha) <= :fecha2
+				ORDER BY clientes.codagente;";
+		$this->consulta('SET NAMES utf8');
+		# Escribir encabezado de los productos
+		$encabezado = ["codpago","nombre","razonsocial","codigo_vendedor","nombre_vendedor","fecha_facturacion","fecha_vencimiento","codigo","observaciones","total","fecha_pago"];
+		# El último argumento es por defecto A1 pero lo pongo para que se explique mejor
+		$sheet->fromArray($encabezado, null, 'A1');
+		$parametros = array('fecha1'=>$data['dateini'], 'fecha2'=>$data['datefin']);
+		$resultado = $this->consulta($sql,$parametros);
+		$res = $resultado->fetchAll(PDO::FETCH_ASSOC);
+		$numeroDeFila = 2;
+		foreach ($res as $data ) {
+			# Obtener los datos de la base de datos
+			$codpago = $data['codpago'];
+			$nombre = $data['nombre'];
+			$razonsocial = $data['razonsocial'];
+			$codigo_vendedor = $data['codigo_vendedor'];
+			$nombre_vendedor = $data['nombre_vendedor'];
+			$fecha_facturacion = $data['fecha_facturacion'];
+			$fecha_vencimiento = $data['fecha_vencimiento'];
+			$codigo = $data['codigo'];
+			$observaciones = $data['observaciones'];
+			$total = $data['total'];
+			$fecha_pago = $data['fecha_pago'];
+			# Escribirlos en el documento
+			$sheet->setCellValueByColumnAndRow(1, $numeroDeFila, $codpago);
+			$sheet->setCellValueByColumnAndRow(2, $numeroDeFila, $nombre);
+			$sheet->setCellValueByColumnAndRow(3, $numeroDeFila, $razonsocial);
+			$sheet->setCellValueByColumnAndRow(4, $numeroDeFila, $codigo_vendedor);
+			$sheet->setCellValueByColumnAndRow(5, $numeroDeFila, $nombre_vendedor);
+			$sheet->setCellValueByColumnAndRow(6, $numeroDeFila, $fecha_facturacion);
+			$sheet->setCellValueByColumnAndRow(7, $numeroDeFila, $fecha_vencimiento);
+			$sheet->setCellValueByColumnAndRow(8, $numeroDeFila, $codigo);
+			$sheet->setCellValueByColumnAndRow(9, $numeroDeFila, $observaciones);
+			$sheet->setCellValueByColumnAndRow(10, $numeroDeFila, $total);
+			$sheet->setCellValueByColumnAndRow(11, $numeroDeFila, $fecha_pago);
 			$numeroDeFila++;
 		}
 		$writer = new Xlsx($spreadsheet);

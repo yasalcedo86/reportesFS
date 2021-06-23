@@ -30,6 +30,7 @@ class Conexion
 		
 		//Comando para genera respaldo de MySQL, enviamos las variales de conexion y el destino
 		$dump = "mysqldump -h " . HOST_DB . " -u ". USER_DB . " --opt " . NAME_DB . " > " . $salida_sql;
+		echo $dump;
 		system($dump, $output); //Ejecutamos el comando para respaldo
 		
 		// $zip = new ZipArchive(); //Objeto de Libreria ZipArchive
